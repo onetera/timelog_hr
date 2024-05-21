@@ -1,5 +1,6 @@
 # :coding: utf-8
 
+import sys
 import os
 from pprint import pprint
 import shotgun_api3 as sa
@@ -249,11 +250,15 @@ def main(
         
         
     
-    #xlsx_file = save_path #+ '/tmp/hr_{}.xlsx'.format( user )
+#    if 'win' in sys.platform:
+#        save_path = save_path[0]
+#    xlsx_file = save_path + os.sep + user + '_' + dt.datetime.now().strftime( '%y%m%d' )
+#
+#    if os.path.splitext( xlsx_file )[1] != '.xlsx':
+#        xlsx_file = xlsx_file + '.xlsx'
 
-    
-    #xlsx_file = '/home/w10137/tmp/hr_{}.xlsx'.format( user )
-    xlsx_file = save_path + os.sep + user + dt.datetime.now().strftime( '%y%m%d' )
+    xlsx_file = save_path
+
     wb.save( xlsx_file )
 
     if os.path.exists( xlsx_file ):
