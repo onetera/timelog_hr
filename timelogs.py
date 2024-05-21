@@ -34,12 +34,11 @@ mana_list = sg.find(
 #   - 샷 카운트가 샷인지 테스크인지 확인
 #   - 샷작업 이외 항목들, 미팅, 알엔디 따로 표기 되도록 etc 종류별로 시간 표기
 
-<<<<<<< HEAD
 def main( 
-        user , 
-        s_year, s_month, s_day, e_year = None, 
-        e_month = None, e_day = None, 
-        save_path = os.path.expanduser('~') 
+            user , 
+            s_year, s_month, s_day, e_year = None, 
+            e_month = None, e_day = None, 
+            save_path = os.path.expanduser('~') 
         ):
     started = dt.datetime( s_year, s_month, s_day )    
     ended   = dt.datetime( e_year, e_month, e_day )    
@@ -62,20 +61,6 @@ def main(
 
     result = sg.find( 
                     'TimeLog', filters,
-=======
-def main( user ):
-    started = dt.datetime( 
-                    dt.datetime.now().year  -1,
-                    dt.datetime.now().month ,
-                    dt.datetime.now().day
-    )    
-    result = sg.find( 
-                    'TimeLog',
-                    [
-                        ['created_at', 'greater_than', started ],
-                        ['user.HumanUser.firstname', 'is', user ],
-                    ],
->>>>>>> ac19b32 (first init)
                     [ 
                         'created_at','user', 'entity', 'duration','project', 
                         'user.HumanUser.department.Department.name',
@@ -105,19 +90,12 @@ def main( user ):
 
         fin_data[month][show][entity].append(  _data  )
     
-<<<<<<< HEAD
-=======
-    #pprint( fin_data  )
->>>>>>> ac19b32 (first init)
     #return fin_data 
     wb = openpyxl.Workbook()
 
     sheet = wb.active
-<<<<<<< HEAD
     sheet.title = '24.5월이전'
 
-=======
->>>>>>> ac19b32 (first init)
     col_list = [ 
             '투입월','부서', '이름', '프로젝트명', 'Shot Count', 'Task시간', '총투입시간',  'Meeting Count','Meeting 시간','CGIsup Count',
             'CGIsup 시간', 'RND', 'RND 시간', 'Out Work', 'Out Work 시간', 'Teamlead', 'Teamlead 시간', 'No info',
@@ -134,20 +112,13 @@ def main( user ):
             _data = fin_data[month][show]
             etc_tasks = get_classify_task( _data )
             all_etc_task_duration = sum( [ etc_tasks[x][1] for x in etc_tasks ] ) / 60.0
-<<<<<<< HEAD
-=======
-#            print( '+' * 50 )
-#            print( all_etc_task_duration )
-#            print( '+' * 50 )
->>>>>>> ac19b32 (first init)
 
             sheet.cell( row  , column = 1 ).value = month
             sheet.cell( row  , column = 2  ).value = _data[ list(_data.keys())[0] ][0]['user.HumanUser.department.Department.name']
             sheet.cell( row  , column = 3  ).value = user
             sheet.cell( row  , column = 4  ).value = show
             sheet.cell( row  , column = 5  ).value = len( get_all_tasks(_data ) )
-<<<<<<< HEAD
-            sheet.cell( row  , column = 6  ).value = get_all_timelogs(_data ) / 60.0 - all_etc_task_duration
+            sheet.cell( row  , column = 6  ).value = round( get_all_timelogs(_data ) / 60.0 - all_etc_task_duration , 1 )
             sheet.cell( row  , column = 7  ).value = get_all_timelogs(_data ) / 60.0
             if 'Meeting' in list( etc_tasks.keys() ):
                 sheet.cell( row  , column = 8  ).value = etc_tasks['Meeting'][0]
@@ -173,26 +144,7 @@ def main( user ):
             if 'Concept' in list( etc_tasks.keys() ):
                 sheet.cell( row  , column = 22 ).value = etc_tasks['Concept'][0]
                 sheet.cell( row  , column = 23 ).value = etc_tasks['Concept'][1] / 60.0
-=======
-            sheet.cell( row  , column = 6  ).value = round( get_all_timelogs(_data ) / 60.0 - all_etc_task_duration , 1 )
-            sheet.cell( row  , column = 7  ).value = get_all_timelogs(_data ) / 60.0
-            sheet.cell( row  , column = 8  ).value = etc_tasks['Meeting'][0]
-            sheet.cell( row  , column = 9  ).value = etc_tasks['Meeting'][1] / 60.0
-            sheet.cell( row  , column = 10 ).value = etc_tasks['CGI_sup'][0]
-            sheet.cell( row  , column = 11 ).value = etc_tasks['CGI_sup'][1] / 60.0
-            sheet.cell( row  , column = 12 ).value = etc_tasks['rnd'][0]
-            sheet.cell( row  , column = 13 ).value = etc_tasks['rnd'][1] / 60.0
-            sheet.cell( row  , column = 14 ).value = etc_tasks['OutWork'][0]
-            sheet.cell( row  , column = 15 ).value = etc_tasks['OutWork'][1] / 60.0
-            sheet.cell( row  , column = 16 ).value = etc_tasks['TeamLead'][0]
-            sheet.cell( row  , column = 17 ).value = etc_tasks['TeamLead'][1] / 60.0
-            sheet.cell( row  , column = 18 ).value = etc_tasks['NoInfo'][0]
-            sheet.cell( row  , column = 19 ).value = etc_tasks['NoInfo'][1] / 60.0
-            sheet.cell( row  , column = 20 ).value = etc_tasks['Previz'][0]
-            sheet.cell( row  , column = 21 ).value = etc_tasks['Previz'][1] / 60.0
-            sheet.cell( row  , column = 22 ).value = etc_tasks['Concept'][0]
-            sheet.cell( row  , column = 23 ).value = etc_tasks['Concept'][1] / 60.0
->>>>>>> ac19b32 (first init)
+
 
             thumb_tl = sel_thumb( _data )
             thumb_path = thumb_tl['thumb']
@@ -208,7 +160,6 @@ def main( user ):
                 sheet.cell( row = row , column = 24 ).value = 'No Image'
             row += 1
                 
-<<<<<<< HEAD
     if expand_end:
         
         filters = [
@@ -298,12 +249,11 @@ def main( user ):
         
         
     
-    xlsx_file = save_path #+ '/tmp/hr_{}.xlsx'.format( user )
+    #xlsx_file = save_path #+ '/tmp/hr_{}.xlsx'.format( user )
 
-=======
     
-    xlsx_file = '/home/w10137/tmp/hr_{}.xlsx'.format( user )
->>>>>>> ac19b32 (first init)
+    #xlsx_file = '/home/w10137/tmp/hr_{}.xlsx'.format( user )
+    xlsx_file = save_path + os.sep + user + dt.datetime.now().strftime( '%y%m%d' )
     wb.save( xlsx_file )
 
     if os.path.exists( xlsx_file ):
@@ -329,12 +279,6 @@ def sel_thumb( _data ):
     temp = [ x for x in timelogs if x['entity']['name'] not in mana_list ]
     ordered = sorted( temp, key = lambda x : x['duration'], reverse = True )
     
-<<<<<<< HEAD
-=======
-#    print( '+' * 50 )
-#    pprint( ordered )
-#    print( '+' * 50 )
->>>>>>> ac19b32 (first init)
 
     for x in ordered:
         if x['thumb']:
@@ -376,17 +320,12 @@ def sel_thumb( _data ):
     return { 'thumb' : '' }
     
 
-<<<<<<< HEAD
 def get_classify_task( _data, new_period = False ):
     exclude_mana = [ 'Work', 'Management', 'Dayoff', 'H_Dayoff' ]
     if new_period:
         mana_code_list = [ x['code']  for x in  mana_list if x['code'] in exclude_mana ]
     else:
         mana_code_list = [ x['code']  for x in  mana_list if x['code'] not in exclude_mana ]
-=======
-def get_classify_task( _data ):
-    mana_code_list = [ x['code']  for x in  mana_list ]
->>>>>>> ac19b32 (first init)
     
     result = OrderedDict()
     for code in mana_code_list:
@@ -434,10 +373,6 @@ def get_period( _iter ):
     return start, end
 
 def down_thumb( timelog ):
-<<<<<<< HEAD
-    #pprint( timelog )
-=======
->>>>>>> ac19b32 (first init)
     entity = sg.find_one( 
                 'Task',
                 [ 
@@ -445,12 +380,6 @@ def down_thumb( timelog ):
                 ], 
                 [ 'image', 'content']
     )
-<<<<<<< HEAD
-=======
-    print( '*' * 50 )
-    print( entity )
-    print( '*' * 50 )
->>>>>>> ac19b32 (first init)
     if not entity:
         return
 
@@ -480,13 +409,11 @@ def get_col_size( width, height ):
 
 if __name__ == '__main__':
     start = dt.datetime.now()
-<<<<<<< HEAD
 
     pprint( 
         main( '김상큼' , 2024, 1,1, 2024,4,30  )
     )
 
-=======
 #    pprint( get_etc_task() )
     for _user in [ '김규남']:
         main( _user ) 
@@ -499,6 +426,5 @@ if __name__ == '__main__':
 #    for x in result:
 #        print( result[x].keys() )
 #    print( '+' * 40 )
->>>>>>> ac19b32 (first init)
     end = dt.datetime.now()
     print( end - start )
