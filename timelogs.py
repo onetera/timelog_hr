@@ -257,7 +257,10 @@ def main(
 #    if os.path.splitext( xlsx_file )[1] != '.xlsx':
 #        xlsx_file = xlsx_file + '.xlsx'
 
-    xlsx_file = save_path
+    if type( save_path ) == type( () ):
+        xlsx_file = save_path[0]
+    else:
+        xlsx_file = save_path
 
     wb.save( xlsx_file )
 
