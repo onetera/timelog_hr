@@ -20,7 +20,7 @@ import timelogs
 sg = Shotgun(
     'https://west.shotgunstudio.com',
     'ami_main',
-    'iuqeijx^vfdaZcphhjxqxdp4z'
+    'm7ykg!kjleMsxdqslxduzibot',
 )
 
 

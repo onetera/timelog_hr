@@ -15,7 +15,7 @@ import uuid
 
 sg = sa.Shotgun(
                 'https://west.shotgunstudio.com',
-                api_key='6h&ziahfuGbqdubxrxeyopinl',
+                api_key='c0lngyCtzeyakrbxuq$ytwiea',
                 script_name = 'eventTrigger',
             )
 
